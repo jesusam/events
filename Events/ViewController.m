@@ -57,21 +57,25 @@
     return [self.eventsArray count];
 }
 
-//JM
+//JM commonly used tableView:cellForRowAtIndexPath: method
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //JM this CellIdentifier has to be copied into the Reuse Identifier section in the attributes of the cellView in storyboard
     static NSString *CellIdentifier = @"EventTableViewCell";
     
+    //JM attempts to retrieve a reusable cell that is no longer in use
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //JM if there was no cell available for reuse, the method will have returned nil so create a new cell with the reuse identifier CellIdentifier
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    //JM creates and event which is a copy of the event in eventsArray with the same index as the new cell will have
     Event *event = [self.eventsArray objectAtIndex:indexPath.row];
     NSLog(@"%@", event);
     
+    //JM assigns the text and detailtext to the title of the event and the venue name respectively
     cell.textLabel.text = event.title;
     cell.detailTextLabel.text = event.venueName;
     
